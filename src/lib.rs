@@ -70,7 +70,7 @@ impl<U> Catppuccin<U> {
     ///     form::set("punctuation.delimiter", colors.red);
     /// }));
     /// ```
-    pub fn modify<R>(self, modifications: impl Fn(Colors) -> R + Send + Sync + 'static) -> Self {
+    pub fn modify(self, modifications: impl Fn(Colors) + Send + Sync + 'static) -> Self {
         let modifications = Box::new(move |c| {
             modifications(c);
         });
@@ -110,17 +110,17 @@ impl form::ColorScheme for ColorScheme {
 
         form::set_many!(
             // Base Duat Forms
-            ("DefaultOk", Form::with(c.sapphire)),
-            ("AccentOk", Form::with(c.sky).bold()),
-            ("DefaultErr", Form::with(c.maroon)),
-            ("AccentErr", Form::with(c.red).bold()),
-            ("DefaultHint", Form::with(c.text)),
-            ("AccentHint", Form::with(c.subtext0).bold()),
-            ("MainCursor", Form::reverse()),
-            ("ExtraCursor", Form::reverse()),
+            ("Accent", Form::with(c.text).bold()),
+            ("Default.error", Form::with(c.maroon)),
+            ("Accent.error", Form::with(c.red).bold()),
+            ("Default.warn", Form::with(c.yellow)),
+            ("Accent.warn", Form::with(c.peach).bold()),
+            ("Default.info", Form::with(c.sapphire)),
+            ("Accent.info", Form::with(c.sky).bold()),
+            ("MainCaret", Form::reverse()),
+            ("ExtraCaret", Form::reverse()),
             ("MainSelection", Form::with(c.base).on(c.overlay1)),
             ("ExtraSelection", Form::with(c.base).on(c.overlay0)),
-            ("Inactive", Form::with(c.overlay2)),
             // Other Duat Forms
             ("LineNum", Form::with(c.overlay2)),
             ("MainLineNum", Form::with(c.yellow)),
@@ -171,7 +171,11 @@ impl form::ColorScheme for ColorScheme {
             ("markup.list.unchecked", Form::with(c.overlay1)),
             // Plugin and Ui Forms
             ("VertRule", Form::with(c.subtext0)),
-            ("Frame", Form::with(c.subtext0).on(c.base))
+            ("Frame", Form::with(c.subtext0).on(c.base)),
+            ("Notifications.target", Form::with(c.subtext1)),
+            ("Notifications.colon", Form::with(c.subtext0)),
+            ("Prompt", Form::with(c.green)),
+            ("Prompt.colon", Form::with(c.subtext0)),
         );
 
         (self.modifications)(c)
