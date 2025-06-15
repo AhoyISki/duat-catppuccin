@@ -63,10 +63,11 @@ impl<U> Catppuccin<U> {
     /// ```rust
     /// # use duat_core::form;
     /// # use duat_catppuccin as catppuccin;
-    /// # fn plug(plug: Catppuccin) {}
+    /// # macro_rules! plug { ($($_:tt)*) => {} };
+    /// # fn plug() {}
     /// use catppuccin::Catppuccin;
     ///
-    /// plug(Catppuccin::new().modify(|colors| {
+    /// plug!(Catppuccin::new().modify(|colors| {
     ///     form::set("punctuation.delimiter", colors.red);
     /// }));
     /// ```
@@ -110,26 +111,25 @@ impl form::ColorScheme for ColorScheme {
 
         form::set_many!(
             // Base Duat Forms
-            ("Accent", Form::with(c.text).bold()),
-            ("Default.error", Form::with(c.maroon)),
-            ("Accent.error", Form::with(c.red).bold()),
-            ("Default.warn", Form::with(c.yellow)),
-            ("Accent.warn", Form::with(c.peach).bold()),
-            ("Default.info", Form::with(c.sapphire)),
-            ("Accent.info", Form::with(c.sky).bold()),
-            ("MainCaret", Form::reverse()),
-            ("ExtraCaret", Form::reverse()),
-            ("MainSelection", Form::with(c.base).on(c.overlay1)),
-            ("ExtraSelection", Form::with(c.base).on(c.overlay0)),
+            ("accent", Form::with(c.text).bold()),
+            ("default.error", Form::with(c.maroon)),
+            ("accent.error", Form::with(c.red).underlined().bold()),
+            ("default.warn", Form::with(c.yellow)),
+            ("accent.warn", Form::with(c.peach).underlined().bold()),
+            ("default.info", Form::with(c.sapphire)),
+            ("accent.info", Form::with(c.sky).underlined().bold()),
+            ("caret.main", Form::reverse()),
+            ("caret.extra", Form::reverse()),
+            ("selection.main", Form::with(c.base).on(c.overlay1)),
+            ("selection.extra", Form::with(c.base).on(c.overlay0)),
             // Other Duat Forms
-            ("LineNum", Form::with(c.overlay2)),
-            ("MainLineNum", Form::with(c.yellow)),
-            ("WrappedLineNum", Form::with(c.teal)),
-            ("File", Form::with(c.yellow)),
-            ("Selections", Form::with(c.blue)),
-            ("Coord", Form::with(c.peach)),
-            ("Separator", Form::with(c.teal)),
-            ("Mode", Form::with(c.green)),
+            ("linenum.main", Form::with(c.yellow)),
+            ("linenum.wrapped", Form::with(c.teal)),
+            ("file", Form::with(c.yellow)),
+            ("selections", Form::with(c.blue)),
+            ("coord", Form::with(c.peach)),
+            ("separator", Form::with(c.teal)),
+            ("mode", Form::with(c.green)),
             // Tree sitter Forms
             ("variable", Form::with(c.text)),
             ("variable.builtin", Form::with(c.peach)),
@@ -170,12 +170,11 @@ impl form::ColorScheme for ColorScheme {
             ("markup.list.checked", Form::with(c.green)),
             ("markup.list.unchecked", Form::with(c.overlay1)),
             // Plugin and Ui Forms
-            ("VertRule", Form::with(c.subtext0)),
-            ("Frame", Form::with(c.subtext0).on(c.base)),
-            ("Notifications.target", Form::with(c.subtext1)),
-            ("Notifications.colon", Form::with(c.subtext0)),
-            ("Prompt", Form::with(c.green)),
-            ("Prompt.colon", Form::with(c.subtext0)),
+            ("terminal.frame", Form::with(c.subtext0).on(c.base)),
+            ("notifs.target", Form::with(c.subtext1)),
+            ("notifs.colon", Form::with(c.subtext0)),
+            ("prompt", Form::with(c.green)),
+            ("prompt.colon", Form::with(c.subtext0)),
         );
 
         (self.modifications)(c)
