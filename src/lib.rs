@@ -145,7 +145,7 @@ impl form::ColorScheme for ColorScheme {
             ("type", Form::with(c.yellow).italic()),
             ("type.builtin", Form::with(c.yellow).reset()),
             ("attribute", Form::with(c.green)),
-            ("property", Form::with(c.green)),
+            ("property", Form::with(c.text)),
             ("function", Form::with(c.blue).reset()),
             ("function.macro", Form::with(c.lavender).italic()),
             ("constructor", Form::with(c.peach)),
@@ -171,7 +171,7 @@ impl form::ColorScheme for ColorScheme {
             ("markup.list.checked", Form::with(c.green)),
             ("markup.list.unchecked", Form::with(c.overlay1)),
             // Plugin and Ui Forms
-            ("terminal.frame", Form::with(c.subtext0).on(c.base)),
+            ("terminal.frame", Form::with(c.subtext0)),
             ("notifs.target", Form::with(c.subtext1)),
             ("notifs.colon", Form::with(c.subtext0)),
             ("prompt", Form::with(c.green)),
