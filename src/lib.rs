@@ -104,9 +104,9 @@ impl form::ColorScheme for ColorScheme {
         };
 
         if self.no_background {
-            form::set("Default", Form::with(c.text));
+            form::set("default", Form::with(c.text));
         } else {
-            form::set("Default", Form::with(c.text).on(c.base));
+            form::set("default", Form::with(c.text).on(c.base));
         }
 
         form::set_many!(
@@ -147,6 +147,7 @@ impl form::ColorScheme for ColorScheme {
             ("attribute", Form::with(c.green)),
             ("property", Form::with(c.green)),
             ("function", Form::with(c.blue).reset()),
+            ("function.macro", Form::with(c.lavender).italic()),
             ("constructor", Form::with(c.peach)),
             ("operator", Form::with(c.sapphire)),
             ("keyword", Form::with(c.mauve)),
@@ -175,6 +176,14 @@ impl form::ColorScheme for ColorScheme {
             ("notifs.colon", Form::with(c.subtext0)),
             ("prompt", Form::with(c.green)),
             ("prompt.colon", Form::with(c.subtext0)),
+            ("default.StatusLine", Form::on(c.surface0)),
+            ("default.VertRule", Form::with(c.surface0)),
+            ("default.LineNumbers", Form::with(c.overlay0)),
+            // For duat-kak
+            ("caret.main.Normal", Form::with(c.base).on(c.text)),
+            ("caret.extra.Normal", Form::with(c.base).on(c.sapphire)),
+            ("caret.main.Insert", Form::with(c.base).on(c.mauve)),
+            ("caret.extra.Insert", Form::with(c.base).on(c.yellow)),
         );
 
         (self.modifications)(c)
