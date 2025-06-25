@@ -14,8 +14,16 @@
 //! This plugin lets you use its colors to modify other `Form`s with
 //! the `Catppuccin::modify` function. It also has a `no_background`
 //! function, if you don't want the background to change.
-use std::marker::PhantomData;
-
+//!
+//! # Installation
+//!
+//! Just like other Duat plugins, this one can be installed by calling
+//! `cargo add` in the config directory:
+//!
+//! ```bash
+//! cargo add duat-catppuccin@"*" --rename catppuccin
+//! ```
+//!
 use duat_core::prelude::*;
 
 pub struct Catppuccin {
@@ -25,7 +33,7 @@ pub struct Catppuccin {
 
 impl Catppuccin {
     /// Returns a new instance of the [`Catppuccin`] [`Plugin`]
-    fn new() -> Self {
+    pub fn new() -> Self {
         Self {
             no_background: false,
             modifications: Box::new(|_| {}),
@@ -41,10 +49,10 @@ impl<U: duat_core::ui::Ui> duat_core::Plugin<U> for Catppuccin {
     fn plug(self) {
         let no_bg = self.no_background;
         let m = Box::leak(self.modifications);
-        add_colorscheme(ColorScheme::latte(m).no_bg(no_bg));
-        add_colorscheme(ColorScheme::frappe(m).no_bg(no_bg));
-        add_colorscheme(ColorScheme::macchiato(m).no_bg(no_bg));
-        add_colorscheme(ColorScheme::mocha(m).no_bg(no_bg));
+        form::add_colorscheme(ColorScheme::latte(m).no_bg(no_bg));
+        form::add_colorscheme(ColorScheme::frappe(m).no_bg(no_bg));
+        form::add_colorscheme(ColorScheme::macchiato(m).no_bg(no_bg));
+        form::add_colorscheme(ColorScheme::mocha(m).no_bg(no_bg));
     }
 }
 
@@ -77,6 +85,12 @@ impl Catppuccin {
             modifications(c);
         });
         Self { modifications, ..self }
+    }
+}
+
+impl Default for Catppuccin {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
