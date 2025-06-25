@@ -111,13 +111,15 @@ impl form::ColorScheme for ColorScheme {
 
         form::set_many!(
             // Base Duat Forms
-            ("accent", Form::with(c.text).bold()),
+            ("accent", Form::with(c.rosewater).bold()),
             ("default.error", Form::with(c.maroon)),
-            ("accent.error", Form::with(c.red).underlined().bold()),
+            ("accent.error", Form::with(c.red).bold()),
             ("default.warn", Form::with(c.yellow)),
-            ("accent.warn", Form::with(c.peach).underlined().bold()),
+            ("accent.warn", Form::with(c.peach).bold()),
             ("default.info", Form::with(c.sapphire)),
-            ("accent.info", Form::with(c.sky).underlined().bold()),
+            ("accent.info", Form::with(c.sky).bold()),
+            ("default.debug", Form::with(c.subtext1)),
+            ("accent.debug", Form::with(c.lavender).bold()),
             ("caret.main", Form::reverse()),
             ("caret.extra", Form::reverse()),
             ("selection.main", Form::with(c.base).on(c.overlay1)),
