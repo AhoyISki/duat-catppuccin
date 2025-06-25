@@ -16,23 +16,24 @@
 //! function, if you don't want the background to change.
 use std::marker::PhantomData;
 
-use duat_core::form::{self, Form, add_colorscheme};
+use duat_core::prelude::*;
 
-pub struct Catppuccin<U> {
+pub struct Catppuccin {
     no_background: bool,
     modifications: Box<dyn Fn(Colors) + Send + Sync + 'static>,
-    _u: PhantomData<U>,
 }
 
-impl<U: duat_core::ui::Ui> duat_core::Plugin<U> for Catppuccin<U> {
+impl Catppuccin {
+    /// Returns a new instance of the [`Catppuccin`] [`Plugin`]
     fn new() -> Self {
         Self {
             no_background: false,
             modifications: Box::new(|_| {}),
-            _u: PhantomData,
         }
     }
+}
 
+impl<U: duat_core::ui::Ui> duat_core::Plugin<U> for Catppuccin<U> {
     /// Adds the catppuccin colorschemes
     ///
     /// This will add the Latte, Frappe, Macchiato, and Mocha flavors,
