@@ -33,7 +33,7 @@ impl Catppuccin {
     }
 }
 
-impl<U: duat_core::ui::Ui> duat_core::Plugin<U> for Catppuccin<U> {
+impl<U: duat_core::ui::Ui> duat_core::Plugin<U> for Catppuccin {
     /// Adds the catppuccin colorschemes
     ///
     /// This will add the Latte, Frappe, Macchiato, and Mocha flavors,
@@ -48,7 +48,7 @@ impl<U: duat_core::ui::Ui> duat_core::Plugin<U> for Catppuccin<U> {
     }
 }
 
-impl<U> Catppuccin<U> {
+impl Catppuccin {
     /// Disables the background color
     ///
     /// This can allow you to have, for example, a transparent
