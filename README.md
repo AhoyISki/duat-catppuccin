@@ -26,5 +26,11 @@ Just like other Duat plugins, this one can be installed by calling
 cargo add duat-catppuccin@"*" --rename catppuccin
 ```
 
+Or, if you are using a `--git-deps` version of duat, do this:
+
+```bash
+cargo add --git https://github.com/AhoyISki/duat-catppuccin --rename catppuccin
+```
+
 
  [__link0]: https://catppuccin.com

@@ -23,6 +23,12 @@
 //! ```bash
 //! cargo add duat-catppuccin@"*" --rename catppuccin
 //! ```
+//!
+//! Or, if you are using a `--git-deps` version of duat, do this:
+//!
+//! ```bash
+//! cargo add --git https://github.com/AhoyISki/duat-catppuccin --rename catppuccin
+//! ```
 use duat_core::prelude::*;
 
 pub struct Catppuccin {
