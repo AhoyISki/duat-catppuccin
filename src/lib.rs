@@ -23,7 +23,6 @@
 //! ```bash
 //! cargo add duat-catppuccin@"*" --rename catppuccin
 //! ```
-//!
 use duat_core::prelude::*;
 
 pub struct Catppuccin {
@@ -156,6 +155,7 @@ impl form::ColorScheme for ColorScheme {
             ("label", Form::with(c.green)),
             ("string", Form::with(c.green)),
             ("string.escape", Form::with(c.peach)),
+            ("string.special.path", Form::with(c.sky).underlined()),
             ("character", Form::with(c.peach)),
             ("boolean", Form::with(c.peach)),
             ("number", Form::with(c.peach)),
@@ -196,6 +196,7 @@ impl form::ColorScheme for ColorScheme {
             ("default.StatusLine", Form::on(c.surface0)),
             ("default.VertRule", Form::with(c.surface0)),
             ("default.LineNumbers", Form::with(c.overlay0)),
+            ("matched_paren", Form::with(c.red).underlined()),
             // For duat-kak
             ("caret.main.Normal", Form::with(c.base).on(c.text)),
             ("caret.extra.Normal", Form::with(c.base).on(c.sapphire)),
