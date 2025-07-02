@@ -155,6 +155,7 @@ impl form::ColorScheme for ColorScheme {
             // Tree sitter Forms
             ("variable", Form::with(c.text)),
             ("variable.builtin", Form::with(c.peach)),
+            ("variable.member", Form::with(c.lavender)),
             ("constant", Form::with(c.peach)),
             ("constant.builtin", Form::with(c.peach)),
             ("module", Form::with(c.blue).italic()),
