@@ -195,6 +195,10 @@ impl form::ColorScheme for ColorScheme {
             ("markup.list", Form::with(c.yellow)),
             ("markup.list.checked", Form::with(c.green)),
             ("markup.list.unchecked", Form::with(c.overlay1)),
+            ("diff.plus", Form::with(c.green)),
+            ("diff.delta", Form::with(c.blue)),
+            ("diff.delta.renamed", Form::with(c.yellow)),
+            ("diff.minus", Form::with(c.red)),
             // Plugin and Ui Forms
             ("terminal.frame", Form::with(c.subtext0)),
             ("notifs.target", Form::with(c.subtext1)),
