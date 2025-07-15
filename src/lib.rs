@@ -208,7 +208,7 @@ impl form::ColorScheme for ColorScheme {
             ("default.StatusLine", Form::on(c.surface0)),
             ("default.VertRule", Form::with(c.surface0)),
             ("default.LineNumbers", Form::with(c.overlay0)),
-            ("matched_paren", Form::with(c.red).underlined()),
+            ("matched_pair", Form::with(c.peach).on(c.surface1).bold()),
             // For duat-kak
             ("caret.main.Normal", Form::with(c.base).on(c.text)),
             ("caret.extra.Normal", Form::with(c.base).on(c.sapphire)),
