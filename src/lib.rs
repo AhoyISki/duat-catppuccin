@@ -206,6 +206,7 @@ impl form::ColorScheme for ColorScheme {
             ("prompt", Form::with(c.green)),
             ("prompt.colon", Form::with(c.subtext0)),
             ("default.StatusLine", Form::on(c.surface0)),
+            ("default.LogBook", Form::on(c.surface0)),
             ("default.VertRule", Form::with(c.surface0)),
             ("default.LineNumbers", Form::with(c.overlay0)),
             ("matched_pair", Form::with(c.peach).on(c.surface1).bold()),
