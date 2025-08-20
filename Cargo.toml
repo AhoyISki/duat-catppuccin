@@ -1,6 +1,6 @@
 [package]
 name = "duat-catppuccin"
-version = "0.2.1"
+version = "0.3.0"
 edition = "2024"
 authors = ["AhoyISki"]
 description = "The Catppuccin colorschemes for the Duat text editor"
@@ -11,4 +11,4 @@ keywords = ["colorscheme", "duat", "plugin"]
 categories = ["command-line-utilities", "text-editors", "config"]
 
 [dependencies]
-duat-core = { version = "0.5.3", git = "https://github.com/AhoyISki/duat" }
+duat-core = { version = "0.6.0", git = "https://github.com/AhoyISki/duat" }
