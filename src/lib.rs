@@ -145,6 +145,7 @@ impl form::ColorScheme for ColorScheme {
             ("selection.main", Form::with(c.base).on(c.overlay1)),
             ("selection.extra", Form::with(c.base).on(c.overlay0)),
             ("cloak", Form::with(c.overlay1).on(c.base)),
+            ("character.control", Form::with(c.overlay1)),
             // Other Duat Forms
             ("linenum.main", Form::with(c.yellow)),
             ("linenum.wrapped", Form::with(c.teal)),
