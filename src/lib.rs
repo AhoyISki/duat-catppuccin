@@ -46,12 +46,12 @@ impl Catppuccin {
     }
 }
 
-impl<U: duat_core::ui::Ui> duat_core::Plugin<U> for Catppuccin {
+impl duat_core::Plugin for Catppuccin {
     /// Adds the catppuccin colorschemes
     ///
     /// This will add the Latte, Frappe, Macchiato, and Mocha flavors,
     /// modified by the options passed to [`Catppuccin`]
-    fn plug(self, _: &Plugins<U>) {
+    fn plug(self, _: &Plugins) {
         let no_bg = self.no_background;
         let m = Box::leak(self.modifications);
         form::add_colorscheme(ColorScheme::latte(m).no_bg(no_bg));
