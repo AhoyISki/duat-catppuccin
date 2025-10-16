@@ -29,7 +29,7 @@
 //! ```bash
 //! cargo add --git https://github.com/AhoyISki/duat-catppuccin --rename catppuccin
 //! ```
-use duat_core::prelude::*;
+use duat::prelude::*;
 
 pub struct Catppuccin {
     no_background: bool,
@@ -46,7 +46,7 @@ impl Catppuccin {
     }
 }
 
-impl duat_core::Plugin for Catppuccin {
+impl duat::prelude::Plugin for Catppuccin {
     /// Adds the catppuccin colorschemes
     ///
     /// This will add the Latte, Frappe, Macchiato, and Mocha flavors,
