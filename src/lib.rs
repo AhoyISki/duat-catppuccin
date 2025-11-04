@@ -202,7 +202,6 @@ impl form::ColorScheme for ColorScheme {
             ("diff.minus", Form::with(c.red)),
             // Plugin and Ui Forms
             ("terminal.frame", Form::with(c.subtext0)),
-            ("notifs.target", Form::with(c.subtext1)),
             ("notifs.colon", Form::with(c.subtext0)),
             ("prompt", Form::with(c.green)),
             ("prompt.colon", Form::with(c.subtext0)),
@@ -211,11 +210,13 @@ impl form::ColorScheme for ColorScheme {
             ("default.VertRule", Form::with(c.surface0)),
             ("default.LineNumbers", Form::with(c.overlay0)),
             ("matched_pair", Form::with(c.peach).on(c.surface1).bold()),
-            // For duat-kak
+            ("log_book.location", Form::with(c.subtext1)),
+            // For duatmode
             ("caret.main.Normal", Form::with(c.base).on(c.text)),
             ("caret.extra.Normal", Form::with(c.base).on(c.sapphire)),
             ("caret.main.Insert", Form::with(c.base).on(c.mauve)),
             ("caret.extra.Insert", Form::with(c.base).on(c.yellow)),
+            ("parameter", Form::with(c.lavender)),
         );
 
         (self.modifications)(c)
