@@ -211,7 +211,7 @@ impl form::ColorScheme for ColorScheme {
             ("default.LineNumbers", Form::with(c.overlay0)),
             ("matched_pair", Form::with(c.peach).on(c.surface1).bold()),
             ("log_book.location", Form::with(c.subtext1)),
-            ("default.Completions", Form::with(c.surface0)),
+            ("default.Completions", Form::on(c.surface0)),
             ("selected.Completions", Form::with(c.base).on(c.overlay0)),
             // For duatmode
             ("caret.main.Normal", Form::with(c.base).on(c.text)),
