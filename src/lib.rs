@@ -75,15 +75,14 @@ impl Catppuccin {
     /// For example, if you want red delimiters, you can do this:
     ///
     /// ```rust
-    /// # use duat_core::form;
-    /// # use duat_catppuccin as catppuccin;
-    /// # macro_rules! plug { ($($_:tt)*) => {} };
-    /// # fn plug() {}
-    /// use catppuccin::Catppuccin;
+    /// use duat::prelude::*;
+    /// setup_duat!(setup);
     ///
-    /// plug!(Catppuccin::new().modify(|colors| {
-    ///     form::set("punctuation.delimiter", colors.red);
-    /// }));
+    /// fn setup() {
+    ///     plug(duat_catppuccin::Catppuccin::new().modify(|colors| {
+    ///         form::set("punctuation.delimiter", colors.red);
+    ///     }));
+    /// }
     /// ```
     pub fn modify(self, modifications: impl Fn(Colors) + Send + Sync + 'static) -> Self {
         let modifications = Box::new(move |c| {
