@@ -153,7 +153,8 @@ impl form::ColorScheme for ColorScheme {
             ("coord", Form::with(c.peach)),
             ("separator", "punctuation.delimiter"),
             ("mode", Form::with(c.green)),
-            ("terminal.frame", Form::with(c.subtext0)),
+            ("terminal.border", Form::with(c.surface0).on(c.base)),
+            ("terminal.frame", Form::with(c.text).on(c.base)),
             ("notifs.colon", Form::with(c.subtext0)),
             ("prompt", Form::with(c.green)),
             ("prompt.colon", Form::with(c.subtext0)),
@@ -165,6 +166,7 @@ impl form::ColorScheme for ColorScheme {
             ("log_book.location", Form::with(c.subtext1)),
             ("default.Completions", Form::on(c.surface0)),
             ("selected.Completions", Form::with(c.base).on(c.overlay0)),
+            ("default.WhichKey", Form::with(c.text)),
             ("key", Form::with(c.peach)),
             ("key.special", Form::with(c.teal)),
             // For duatmode
@@ -172,7 +174,8 @@ impl form::ColorScheme for ColorScheme {
             ("caret.extra.Normal", Form::with(c.base).on(c.sapphire)),
             ("caret.main.Insert", Form::with(c.base).on(c.mauve)),
             ("caret.extra.Insert", Form::with(c.base).on(c.yellow)),
-            ("parameter", Form::with(c.lavender)),
+            ("param", Form::with(c.lavender)),
+            ("param.flag", Form::with(c.pink)),
             // Tree sitter Forms
             ("variable", Form::with(c.text)),
             ("variable.builtin", Form::with(c.peach)),
