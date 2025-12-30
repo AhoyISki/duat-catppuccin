@@ -11,4 +11,4 @@ keywords = ["colorscheme", "duat", "plugin"]
 categories = ["command-line-utilities", "text-editors", "config"]
 
 [dependencies]
-duat = "0.7.7"
+duat = "0.7.8"
