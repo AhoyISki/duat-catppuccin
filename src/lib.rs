@@ -164,7 +164,7 @@ impl form::ColorScheme for ColorScheme {
             ("default.LineNumbers", Form::with(c.overlay0)),
             ("matched_pair", Form::with(c.peach).on(c.surface1).bold()),
             ("log_book.location", Form::with(c.subtext1)),
-            ("default.Completions", Form::on(c.surface0)),
+            ("default.Completions", Form::on(c.surface1)),
             ("selected.Completions", Form::with(c.base).on(c.overlay0)),
             ("default.WhichKey", Form::with(c.text)),
             ("key", Form::with(c.peach)),
