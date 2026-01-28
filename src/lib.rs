@@ -122,11 +122,13 @@ impl form::ColorScheme for ColorScheme {
             Flavour::Mocha => MOCHA,
         };
 
-        if self.no_background {
+        let default = if self.no_background {
             form::set("default", Form::with(c.text));
+            Form::with(c.text)
         } else {
             form::set("default", Form::with(c.text).on(c.base));
-        }
+            Form::with(c.text).on(c.base)
+        };
 
         form::set_many!(
             // Base Duat Forms
@@ -145,6 +147,11 @@ impl form::ColorScheme for ColorScheme {
             ("selection.extra", Form::with(c.base).on(c.overlay0)),
             ("cloak", Form::with(c.overlay1).on(c.base)),
             ("character.control", Form::with(c.overlay1)),
+            ("replace", Form::with(c.overlay1)),
+            (
+                "replace.new_line.trailing",
+                Form::with(c.red).on(c.surface1)
+            ),
             // duat-base forms
             ("linenum.main", Form::with(c.yellow)),
             ("linenum.wrapped", Form::with(c.teal)),
@@ -158,15 +165,15 @@ impl form::ColorScheme for ColorScheme {
             ("notifs.colon", Form::with(c.subtext0)),
             ("prompt", Form::with(c.green)),
             ("prompt.colon", Form::with(c.subtext0)),
-            ("default.StatusLine", Form::on(c.surface0)),
-            ("default.LogBook", Form::on(c.surface0)),
-            ("default.VertRule", Form::with(c.surface0)),
-            ("default.LineNumbers", Form::with(c.overlay0)),
+            ("default.StatusLine", default.on(c.surface0)),
+            ("default.LogBook", default.on(c.surface0)),
+            ("default.VertRule", default.with(c.surface0)),
+            ("default.LineNumbers", default.with(c.overlay0)),
             ("matched_pair", Form::with(c.peach).on(c.surface1).bold()),
             ("log_book.location", Form::with(c.subtext1)),
-            ("default.Completions", Form::on(c.surface1)),
+            ("default.Completions", default.on(c.surface1)),
             ("selected.Completions", Form::with(c.base).on(c.overlay0)),
-            ("default.WhichKey", Form::with(c.text)),
+            ("default.WhichKey", default.with(c.text)),
             ("key", Form::with(c.peach)),
             ("key.special", Form::with(c.teal)),
             // For duatmode
