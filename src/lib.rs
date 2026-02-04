@@ -15,6 +15,10 @@
 //! the `Catppuccin::modify` function. It also has a `no_background`
 //! function, if you don't want the background to change.
 //!
+//! You can use the `duat_catppuccin::colors` function in order to get
+//! a list of the [`Color`]s, letting you change and set [`Form`]s to
+//! them.
+//!
 //! # Installation
 //!
 //! Just like other Duat plugins, this one can be installed by calling
@@ -29,20 +33,18 @@
 //! ```bash
 //! cargo add --git https://github.com/AhoyISki/duat-catppuccin --rename catppuccin
 //! ```
-use duat::prelude::*;
+use std::sync::LazyLock;
+
+use duat::{form::Color, prelude::*};
 
 pub struct Catppuccin {
     no_background: bool,
-    modifications: Box<dyn Fn(Colors) + Send + Sync + 'static>,
 }
 
 impl Catppuccin {
     /// Returns a new instance of the [`Catppuccin`] [`Plugin`]
     pub fn new() -> Self {
-        Self {
-            no_background: false,
-            modifications: Box::new(|_| {}),
-        }
+        Self { no_background: false }
     }
 }
 
@@ -53,11 +55,10 @@ impl duat::prelude::Plugin for Catppuccin {
     /// modified by the options passed to [`Catppuccin`]
     fn plug(self, _: &Plugins) {
         let no_bg = self.no_background;
-        let m = Box::leak(self.modifications);
-        form::add_colorscheme(ColorScheme::latte(m).no_bg(no_bg));
-        form::add_colorscheme(ColorScheme::frappe(m).no_bg(no_bg));
-        form::add_colorscheme(ColorScheme::macchiato(m).no_bg(no_bg));
-        form::add_colorscheme(ColorScheme::mocha(m).no_bg(no_bg));
+        form::add_colorscheme(ColorScheme::latte().no_bg(no_bg));
+        form::add_colorscheme(ColorScheme::frappe().no_bg(no_bg));
+        form::add_colorscheme(ColorScheme::macchiato().no_bg(no_bg));
+        form::add_colorscheme(ColorScheme::mocha().no_bg(no_bg));
     }
 }
 
@@ -67,28 +68,7 @@ impl Catppuccin {
     /// This can allow you to have, for example, a transparent
     /// terminal.
     pub fn no_background(self) -> Self {
-        Self { no_background: true, ..self }
-    }
-
-    /// Lets you modify forms, based on the chosen colorscheme
-    ///
-    /// For example, if you want red delimiters, you can do this:
-    ///
-    /// ```rust
-    /// use duat::prelude::*;
-    /// setup_duat!(setup);
-    ///
-    /// fn setup() {
-    ///     plug(duat_catppuccin::Catppuccin::new().modify(|colors| {
-    ///         form::set("punctuation.delimiter", colors.red);
-    ///     }));
-    /// }
-    /// ```
-    pub fn modify(self, modifications: impl Fn(Colors) + Send + Sync + 'static) -> Self {
-        let modifications = Box::new(move |c| {
-            modifications(c);
-        });
-        Self { modifications, ..self }
+        Self { no_background: true }
     }
 }
 
@@ -96,6 +76,40 @@ impl Default for Catppuccin {
     fn default() -> Self {
         Self::new()
     }
+}
+
+/// The [`Color`]s used by the catppuccin flavors.
+pub fn colors() -> &'static Colors {
+    static COLORS: LazyLock<Colors> = LazyLock::new(|| Colors {
+        rosewater: Color::new(LATTE.rosewater),
+        flamingo: Color::new(LATTE.flamingo),
+        pink: Color::new(LATTE.pink),
+        mauve: Color::new(LATTE.mauve),
+        red: Color::new(LATTE.red),
+        maroon: Color::new(LATTE.maroon),
+        peach: Color::new(LATTE.peach),
+        yellow: Color::new(LATTE.yellow),
+        green: Color::new(LATTE.green),
+        teal: Color::new(LATTE.teal),
+        sky: Color::new(LATTE.sky),
+        sapphire: Color::new(LATTE.sapphire),
+        blue: Color::new(LATTE.blue),
+        lavender: Color::new(LATTE.lavender),
+        text: Color::new(LATTE.text),
+        subtext1: Color::new(LATTE.subtext1),
+        subtext0: Color::new(LATTE.subtext0),
+        overlay2: Color::new(LATTE.overlay2),
+        overlay1: Color::new(LATTE.overlay1),
+        overlay0: Color::new(LATTE.overlay0),
+        surface2: Color::new(LATTE.surface2),
+        surface1: Color::new(LATTE.surface1),
+        surface0: Color::new(LATTE.surface0),
+        base: Color::new(LATTE.base),
+        mantle: Color::new(LATTE.mantle),
+        crust: Color::new(LATTE.crust),
+    });
+
+    &COLORS
 }
 
 #[derive(Default)]
@@ -110,16 +124,48 @@ enum Flavour {
 struct ColorScheme {
     flavour: Flavour,
     no_background: bool,
-    modifications: &'static (dyn Fn(Colors) + Send + Sync),
 }
 
 impl form::ColorScheme for ColorScheme {
     fn apply(&self) {
-        let c = match self.flavour {
-            Flavour::Latte => LATTE,
-            Flavour::Frappe => FRAPPE,
-            Flavour::Macchiato => MACCHIATO,
-            Flavour::Mocha => MOCHA,
+        let c = {
+            let values = match self.flavour {
+                Flavour::Latte => LATTE,
+                Flavour::Frappe => FRAPPE,
+                Flavour::Macchiato => MACCHIATO,
+                Flavour::Mocha => MOCHA,
+            };
+
+            let c = colors();
+
+            c.rosewater.set(values.rosewater);
+            c.flamingo.set(values.flamingo);
+            c.pink.set(values.pink);
+            c.mauve.set(values.mauve);
+            c.red.set(values.red);
+            c.maroon.set(values.maroon);
+            c.peach.set(values.peach);
+            c.yellow.set(values.yellow);
+            c.green.set(values.green);
+            c.teal.set(values.teal);
+            c.sky.set(values.sky);
+            c.sapphire.set(values.sapphire);
+            c.blue.set(values.blue);
+            c.lavender.set(values.lavender);
+            c.text.set(values.text);
+            c.subtext1.set(values.subtext1);
+            c.subtext0.set(values.subtext0);
+            c.overlay2.set(values.overlay2);
+            c.overlay1.set(values.overlay1);
+            c.overlay0.set(values.overlay0);
+            c.surface2.set(values.surface2);
+            c.surface1.set(values.surface1);
+            c.surface0.set(values.surface0);
+            c.base.set(values.base);
+            c.mantle.set(values.mantle);
+            c.crust.set(values.crust);
+
+            c
         };
 
         let default = if self.no_background {
@@ -147,7 +193,7 @@ impl form::ColorScheme for ColorScheme {
             ("selection.extra", Form::with(c.base).on(c.overlay0)),
             ("cloak", Form::with(c.overlay1).on(c.base)),
             ("character.control", Form::with(c.overlay1)),
-            ("replace", Form::with(c.overlay1)),
+            ("replace", Form::with(c.surface0)),
             (
                 "replace.new_line.trailing",
                 Form::with(c.red).on(c.surface1)
@@ -230,8 +276,6 @@ impl form::ColorScheme for ColorScheme {
             ("diff.delta.renamed", Form::with(c.yellow)),
             ("diff.minus", Form::with(c.red)),
         );
-
-        (self.modifications)(c)
     }
 
     fn name(&self) -> &'static str {
@@ -246,39 +290,35 @@ impl form::ColorScheme for ColorScheme {
 
 impl ColorScheme {
     /// Returns the Catppuccin [`ColorScheme`] in the Latte flavour
-    fn latte(modifications: &'static (dyn Fn(Colors) + Send + Sync)) -> Self {
+    fn latte() -> Self {
         Self {
             flavour: Flavour::Latte,
             no_background: false,
-            modifications,
         }
     }
 
     /// Returns the Catppuccin [`ColorScheme`] in the Frappe flavour
-    fn frappe(modifications: &'static (dyn Fn(Colors) + Send + Sync)) -> Self {
+    fn frappe() -> Self {
         Self {
             flavour: Flavour::Frappe,
             no_background: false,
-            modifications,
         }
     }
 
     /// Returns the Catppuccin [`ColorScheme`] in the Macchiato
     /// flavour
-    fn macchiato(modifications: &'static (dyn Fn(Colors) + Send + Sync)) -> Self {
+    fn macchiato() -> Self {
         Self {
             flavour: Flavour::Macchiato,
             no_background: false,
-            modifications,
         }
     }
 
     /// Returns the Catppuccin [`ColorScheme`] in the Mocha flavour
-    fn mocha(modifications: &'static (dyn Fn(Colors) + Send + Sync)) -> Self {
+    fn mocha() -> Self {
         Self {
             flavour: Flavour::Mocha,
             no_background: false,
-            modifications,
         }
     }
 
@@ -291,36 +331,67 @@ impl ColorScheme {
     }
 }
 
+/// The list of [`Color`]s available for use
 pub struct Colors {
-    pub rosewater: &'static str,
-    pub flamingo: &'static str,
-    pub pink: &'static str,
-    pub mauve: &'static str,
-    pub red: &'static str,
-    pub maroon: &'static str,
-    pub peach: &'static str,
-    pub yellow: &'static str,
-    pub green: &'static str,
-    pub teal: &'static str,
-    pub sky: &'static str,
-    pub sapphire: &'static str,
-    pub blue: &'static str,
-    pub lavender: &'static str,
-    pub text: &'static str,
-    pub subtext1: &'static str,
-    pub subtext0: &'static str,
-    pub overlay2: &'static str,
-    pub overlay1: &'static str,
-    pub overlay0: &'static str,
-    pub surface2: &'static str,
-    pub surface1: &'static str,
-    pub surface0: &'static str,
-    pub base: &'static str,
-    pub mantle: &'static str,
-    pub crust: &'static str,
+    pub rosewater: Color,
+    pub flamingo: Color,
+    pub pink: Color,
+    pub mauve: Color,
+    pub red: Color,
+    pub maroon: Color,
+    pub peach: Color,
+    pub yellow: Color,
+    pub green: Color,
+    pub teal: Color,
+    pub sky: Color,
+    pub sapphire: Color,
+    pub blue: Color,
+    pub lavender: Color,
+    pub text: Color,
+    pub subtext1: Color,
+    pub subtext0: Color,
+    pub overlay2: Color,
+    pub overlay1: Color,
+    pub overlay0: Color,
+    pub surface2: Color,
+    pub surface1: Color,
+    pub surface0: Color,
+    pub base: Color,
+    pub mantle: Color,
+    pub crust: Color,
 }
 
-const LATTE: Colors = Colors {
+/// The list of [`Color`]s available for use
+struct ColorValues {
+    rosewater: &'static str,
+    flamingo: &'static str,
+    pink: &'static str,
+    mauve: &'static str,
+    red: &'static str,
+    maroon: &'static str,
+    peach: &'static str,
+    yellow: &'static str,
+    green: &'static str,
+    teal: &'static str,
+    sky: &'static str,
+    sapphire: &'static str,
+    blue: &'static str,
+    lavender: &'static str,
+    text: &'static str,
+    subtext1: &'static str,
+    subtext0: &'static str,
+    overlay2: &'static str,
+    overlay1: &'static str,
+    overlay0: &'static str,
+    surface2: &'static str,
+    surface1: &'static str,
+    surface0: &'static str,
+    base: &'static str,
+    mantle: &'static str,
+    crust: &'static str,
+}
+
+const LATTE: ColorValues = ColorValues {
     rosewater: "#dc8a78",
     flamingo: "#dd7878",
     pink: "#ea76cb",
@@ -348,7 +419,8 @@ const LATTE: Colors = Colors {
     mantle: "#e6e9ef",
     crust: "#dce0e8",
 };
-const FRAPPE: Colors = Colors {
+
+const FRAPPE: ColorValues = ColorValues {
     rosewater: "#f2d5cf",
     flamingo: "#eebebe",
     pink: "#f4b8e4",
@@ -377,7 +449,7 @@ const FRAPPE: Colors = Colors {
     crust: "#232634",
 };
 
-const MACCHIATO: Colors = Colors {
+const MACCHIATO: ColorValues = ColorValues {
     rosewater: "#f4dbd6",
     flamingo: "#f0c6c6",
     pink: "#f5bde6",
@@ -406,7 +478,7 @@ const MACCHIATO: Colors = Colors {
     crust: "#181926",
 };
 
-const MOCHA: Colors = Colors {
+const MOCHA: ColorValues = ColorValues {
     rosewater: "#f5e0dc",
     flamingo: "#f2cdcd",
     pink: "#f5c2e7",
